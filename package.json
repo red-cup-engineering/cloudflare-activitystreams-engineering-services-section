@@ -22,5 +22,10 @@
   "devDependencies": {
     "@red-cup-engineering/witness-journal-document-service": "workspace:*",
     "@red-cup-engineering/computer-inference-engine": "workspace:*"
+  },
+  "license": "MIT",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
   }
 }
