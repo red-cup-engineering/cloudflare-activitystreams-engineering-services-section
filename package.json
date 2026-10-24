@@ -1,5 +1,5 @@
 {
-  "name": "@red-cup-engineering/cloudflare-activitystreams-engineering-services-section",
+  "name": "@red-cup-engineering/cloudflare-activitystreams-operation-services-section",
   "version": "0.1.0",
   "type": "module",
   "description": "Cloudflare R2 and Worker operations with ActivityStreams adapters.",
@@ -12,11 +12,11 @@
     "test": "node --test test/*.test.js"
   },
   "dependencies": {
-    "@red-cup-engineering/cloudflare-r2-engineering-services-section": "workspace:*",
-    "@red-cup-engineering/semiotic-eavt-engineering-services-section": "workspace:*",
+    "@red-cup-engineering/cloudflare-r2-services-section": "workspace:*",
+    "@red-cup-engineering/semiotic-eavt-services-section": "workspace:*",
     "@red-cup-engineering/computer-inference-engine": "workspace:*",
     "@red-cup-engineering/cryptographic-computer-data-engineering-services-section": "workspace:*",
-    "@red-cup-engineering/uri-engineering-services-section": "workspace:*",
+    "@red-cup-engineering/uri-services-section": "workspace:*",
     "wrangler": "4.112.0"
   },
   "devDependencies": {
