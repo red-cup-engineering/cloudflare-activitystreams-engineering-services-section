@@ -17,7 +17,8 @@
     "@red-cup-engineering/computer-inference-engine": "^0.2.13",
     "@red-cup-engineering/cryptographic-computer-data-engineering-services-section": "^0.3.3",
     "@red-cup-engineering/uri-services-section": "^0.1.5",
-    "wrangler": "^4.112.0"
+    "wrangler": "^4.112.0",
+    "@red-cup-engineering/semiotic-eavt-engineering-services-section": "^0.6.0"
   },
   "devDependencies": {
     "@red-cup-engineering/witness-journal-document-service": "^0.1.2",
