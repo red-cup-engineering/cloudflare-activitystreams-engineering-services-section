@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
-import { assayCloudflareR2FreeAllowance } from "@red-cup-engineering/cloudflare-r2-services-section/free-tier-admission";
+import { assayCloudflareR2FreeAllowance } from "@red-cup-engineering/cloudflare-r2-engineering-services-section/free-tier-admission";
 import {
   CONTRACT,
   PROVIDER,
@@ -14,8 +14,8 @@ import {
   uuidFromSha256,
   validateKnowledge,
   validateStoreRequest,
-} from "@red-cup-engineering/cloudflare-r2-services-section/object-custody";
-import { createR2SigV4Client, r2Configuration } from "@red-cup-engineering/cloudflare-r2-services-section/r2-sigv4";
+} from "@red-cup-engineering/cloudflare-r2-engineering-services-section/object-custody";
+import { createR2SigV4Client, r2Configuration } from "@red-cup-engineering/cloudflare-r2-engineering-services-section/r2-sigv4";
 import { completeEffect, proposeEffect, semanticBytesId, textNi } from "@red-cup-engineering/computer-inference-engine/fabric/effect-assay";
 import { witnessJournalBindingFromArgv, recordWitnessedBoundaryAct } from "./boundary-witness.mjs";
 
