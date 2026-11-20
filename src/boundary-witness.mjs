@@ -12,25 +12,25 @@ export const BOUNDARY_ACT_CATEGORY = "resource-brokerage.boundary-act";
 const OBJECT_KIND = "resource-brokerage.boundary-act";
 
 /** The journal named on the command line, or null when none is bound. */
-export function witnessJournalBindingFromArgv(argv = process.argv) {
+export function witnessLogBindingFromArgv(argv = process.argv) {
   const index = argv.indexOf("--witness-journal-data-root");
-  return index === -1 || !argv[index + 1] ? null : createWitnessJournalDataRootBinding(argv[index + 1]);
+  return index === -1 || !argv[index + 1] ? null : createWitnessLogDataRootBinding(argv[index + 1]);
 }
 
 /** A boundary-act journal over one data root. */
-export function createWitnessJournalDataRootBinding(root) {
+export function createWitnessLogDataRootBinding(root) {
   return createEvidenceJournal({ root, objectKind: OBJECT_KIND });
 }
 
 /** Record one act and its outcome under a contract; refusals carry refutation. */
 export async function recordWitnessedBoundaryAct(activity, outcome, at, contract, details = {}, binding) {
   if (!binding) return undefined;
-  const refused = /refus|reject/u.test(outcome);
+  const rejected = /refus|reject/u.test(outcome);
   return binding.record({
     category: BOUNDARY_ACT_CATEGORY,
     recordedAt: at,
     record: { activity: activity?.id ?? null, type: activity?.type ?? null, actor: activity?.actor ?? null, outcome, contract, details },
-    told: { for: !refused, against: refused },
+    told: { for: !rejected, against: rejected },
   });
 }
 

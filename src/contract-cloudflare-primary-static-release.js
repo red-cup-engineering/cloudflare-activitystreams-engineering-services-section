@@ -21,7 +21,7 @@ import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { artifactChecksum, completeEffect, proposeEffect, semanticBytesId, textNi } from "@red-cup-engineering/computer-inference-engine/fabric/effect-assay";
-import { witnessJournalBindingFromArgv, wasWitnessed, recordWitnessedBoundaryAct } from "./boundary-witness.mjs";
+import { witnessLogBindingFromArgv, wasWitnessed, recordWitnessedBoundaryAct } from "./boundary-witness.mjs";
 
 const CONTEXT = "https://www.w3.org/ns/activitystreams";
 const NODE_ID = "resource-brokerage-service-section";
@@ -64,15 +64,15 @@ const LIVE_EFFECTS = Object.freeze([
   "probe-digest-bound-public-routes",
   "restore-prior-cloudflare-worker-version-on-probe-failure",
 ]);
-const WitnessJournal = witnessJournalBindingFromArgv();
+const WitnessLog = witnessLogBindingFromArgv();
 
 function arg(flag) { const index = process.argv.indexOf(flag); return index === -1 ? undefined : process.argv[index + 1]; }
 function atInstant() { return arg("--now") ?? new Date().toISOString(); }
 function operation() { return arg("--operation") ?? "solicit-primary-release"; }
 function input() { return JSON.parse(readFileSync(0, "utf8")); }
 function literal(value) { return JSON.stringify(String(value)); }
-function witness(activity, outcome, at, details = {}) { return recordWitnessedBoundaryAct(activity, outcome, at, CONTRACT, details, WitnessJournal); }
-function witnessed(subject, outcome, at) { return wasWitnessed(subject, outcome, at, WitnessJournal); }
+function witness(activity, outcome, at, details = {}) { return recordWitnessedBoundaryAct(activity, outcome, at, CONTRACT, details, WitnessLog); }
+function witnessed(subject, outcome, at) { return wasWitnessed(subject, outcome, at, WitnessLog); }
 function response(type, source, object) { return { "@context": CONTEXT, id: `urn:uuid:${randomUUID()}`, type, actor: ACTOR, target: source?.actor ?? "urn:ame:unidentified-customer", inReplyTo: source?.id ?? "urn:activity:unidentified", object }; }
 function emit(value, code = 0) { process.stdout.write(`${JSON.stringify(value, null, 2)}\n`); process.exitCode = code; }
 async function reject(source, reason, at, details = {}) { const value = response("Reject", source, { type: "CloudflarePrimaryStaticReleaseRefusal", contract: CONTRACT, reason, ...details }); await witness(source, "primary-release.rejected", at, { reason, ...details }); emit(value, 2); }
