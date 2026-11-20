@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { isRecord } from "@red-cup-engineering/signcell/values";
 
 import { randomUUID } from "node:crypto";
 import { sha256Hex } from "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/integrity";
@@ -76,7 +77,7 @@ function witnessed(subject, outcome, at) { return wasWitnessed(subject, outcome,
 function response(type, source, object) { return { "@context": CONTEXT, id: `urn:uuid:${randomUUID()}`, type, actor: ACTOR, target: source?.actor ?? "urn:ame:unidentified-customer", inReplyTo: source?.id ?? "urn:activity:unidentified", object }; }
 function emit(value, code = 0) { process.stdout.write(`${JSON.stringify(value, null, 2)}\n`); process.exitCode = code; }
 async function reject(source, reason, at, details = {}) { const value = response("Reject", source, { type: "CloudflarePrimaryStaticReleaseRefusal", contract: CONTRACT, reason, ...details }); await witness(source, "primary-release.rejected", at, { reason, ...details }); emit(value, 2); }
-function isRecord(value) { return value !== null && typeof value === "object" && !Array.isArray(value); }
+
 function isDigest(value) { return typeof value === "string" && NI.test(value); }
 function isInstant(value) { return typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/u.test(value) && Number.isFinite(Date.parse(value)); }
 function attachments(note) { return Array.isArray(note?.attachment) ? note.attachment : note?.attachment === undefined ? [] : [note.attachment]; }
