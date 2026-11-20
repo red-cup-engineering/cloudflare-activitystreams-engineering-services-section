@@ -20,7 +20,7 @@ import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { artifactChecksum, completeEffect, proposeEffect, semanticBytesId, textNi } from "@red-cup-engineering/computer-inference-engine/fabric/effect-assay";
-import { witnessLogBindingFromArgv, wasWitnessed, recordWitnessedBoundaryAct } from "./boundary-witness.mjs";
+import { witnessJournalBindingFromArgv, wasWitnessed, recordWitnessedBoundaryAct } from "./boundary-witness.mjs";
 
 const CONTEXT = "https://www.w3.org/ns/activitystreams";
 const NODE_ID = "resource-brokerage-service-section";
@@ -42,15 +42,15 @@ const LOCAL_EFFECTS = Object.freeze([
   "local-subprocess",
   "provider-local-append-only-evidence",
 ]);
-const WitnessLog = witnessLogBindingFromArgv();
+const WitnessJournal = witnessJournalBindingFromArgv();
 
 function arg(flag) { const index = process.argv.indexOf(flag); return index === -1 ? undefined : process.argv[index + 1]; }
 function operation() { return arg("--operation") ?? "solicit-service"; }
 function instant() { return arg("--now") ?? new Date().toISOString(); }
 function input() { return JSON.parse(readFileSync(0, "utf8")); }
 function literal(value) { return JSON.stringify(String(value)); }
-function witness(activity, outcome, at, details = {}) { return recordWitnessedBoundaryAct(activity, outcome, at, CONTRACT, details, WitnessLog); }
-function witnessed(subject, outcome, at) { return wasWitnessed(subject, outcome, at, WitnessLog); }
+function witness(activity, outcome, at, details = {}) { return recordWitnessedBoundaryAct(activity, outcome, at, CONTRACT, details, WitnessJournal); }
+function witnessed(subject, outcome, at) { return wasWitnessed(subject, outcome, at, WitnessJournal); }
 function response(type, source, object) {
   return {
     "@context": CONTEXT,

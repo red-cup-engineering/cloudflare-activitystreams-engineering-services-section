@@ -6,7 +6,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { completeEffect, proposeEffect, semanticBytesId, textNi } from "@red-cup-engineering/computer-inference-engine/fabric/effect-assay";
-import { witnessLogBindingFromArgv, recordWitnessedBoundaryAct } from "./boundary-witness.mjs";
+import { witnessJournalBindingFromArgv, recordWitnessedBoundaryAct } from "./boundary-witness.mjs";
 
 const CONTEXT = "https://www.w3.org/ns/activitystreams";
 const ACTOR = "urn:ame:resource-brokerage-service-section";
@@ -15,7 +15,7 @@ const CONTRACT = "cloudflare-worker-aggregate-attention/v3";
 const ACCOUNT = "337e54ee6dc7d488933f473204a6d89e";
 const NAMESPACE = "48e3d0a57c014b0ebefdfd219fd49648";
 const PREFIX = "article:";
-const VALIDATED_CARRIER_CONTRACTS = new Set([
+const ADMITTED_CARRIER_CONTRACTS = new Set([
   "cloudflare-worker-aggregate-attention/v1",
   "cloudflare-worker-aggregate-attention/v2",
 ]);
@@ -26,7 +26,7 @@ const LAW_PATH = join(NODE_ROOT, "lib/law/cloudflare-koios-attention.rml");
 const DEFAULT_CREDENTIAL = join(NODE_ROOT, "content/resources/cloudflare-workers.env");
 const API = "https://api.cloudflare.com/client/v4";
 const EFFECTS = Object.freeze(["read-koios-aggregate-attention-namespace", "return-bounded-article-day-totals", "append-provider-local-witness-journal"]);
-const WitnessLog = witnessLogBindingFromArgv();
+const WitnessJournal = witnessJournalBindingFromArgv();
 
 function argument(name) { const index = process.argv.indexOf(name); return index === -1 ? undefined : process.argv[index + 1]; }
 function instant() { return argument("--now") ?? new Date().toISOString(); }
@@ -35,7 +35,7 @@ function input() { return JSON.parse(readFileSync(0, "utf8")); }
 function response(type, source, object) { return { "@context": CONTEXT, id: `urn:uuid:${randomUUID()}`, type, actor: ACTOR, target: source?.actor ?? CUSTOMER, inReplyTo: source?.id, object }; }
 function emit(value, status = 0) { process.stdout.write(`${JSON.stringify(value)}\n`); process.exitCode = status; }
 function literal(value) { return JSON.stringify(String(value)); }
-function witness(activity, act, at, data = {}) { return recordWitnessedBoundaryAct(activity, act, at, CONTRACT, data, WitnessLog); }
+function witness(activity, act, at, data = {}) { return recordWitnessedBoundaryAct(activity, act, at, CONTRACT, data, WitnessJournal); }
 async function reject(source, reason, at, details = {}) {
   const value = response("Reject", source, { type: "CloudflareAggregateAttentionRefusal", contract: CONTRACT, reason, credentialRecorded: false, customerMutation: false, ...details });
   await witness(value, "attention.refused", at, { reason });
@@ -109,7 +109,7 @@ async function readings(token, request) {
       const result = await fetch(`${API}/accounts/${ACCOUNT}/storage/kv/namespaces/${NAMESPACE}/values/${encodeURIComponent(key.name)}`, { headers: { Authorization: `Bearer ${token}` } });
       if (!result.ok) throw new Error(`Cloudflare attention value read refused (${result.status})`);
       const value = await result.json();
-      if (!VALIDATED_CARRIER_CONTRACTS.has(value?.contract) || typeof value.path !== "string" || !value.path.startsWith("/posts/") || value.day !== match[1] || !Number.isSafeInteger(value.observedLoads) || value.observedLoads < 1 || value.storesReaderIdentifiers !== false || value.storesReferrers !== false) throw new Error("Cloudflare attention cell violates its aggregate carrier contract");
+      if (!ADMITTED_CARRIER_CONTRACTS.has(value?.contract) || typeof value.path !== "string" || !value.path.startsWith("/posts/") || value.day !== match[1] || !Number.isSafeInteger(value.observedLoads) || value.observedLoads < 1 || value.storesReaderIdentifiers !== false || value.storesReferrers !== false) throw new Error("Cloudflare attention cell violates its aggregate carrier contract");
       found.push(Object.freeze({ path: value.path, day: value.day, observedLoads: value.observedLoads, firstObservedAt: value.firstObservedAt, lastObservedAt: value.lastObservedAt, excludesRecognizedAutomatedUserAgents: value.excludesRecognizedAutomatedUserAgents === true, storesReaderIdentifiers: false, storesReferrers: false }));
     }
     cursor = typeof page.result_info?.cursor === "string" && page.result_info.cursor !== "" ? page.result_info.cursor : undefined;
