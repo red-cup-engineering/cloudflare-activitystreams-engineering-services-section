@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { argValue } from "@red-cup-engineering/parse-javascript-argv-service";
 import { isRecord } from "@red-cup-engineering/signcell/values";
 
 import { randomUUID } from "node:crypto";
@@ -67,9 +68,9 @@ const LIVE_EFFECTS = Object.freeze([
 ]);
 const WitnessJournal = witnessJournalBindingFromArgv();
 
-function arg(flag) { const index = process.argv.indexOf(flag); return index === -1 ? undefined : process.argv[index + 1]; }
-function atInstant() { return arg("--now") ?? new Date().toISOString(); }
-function operation() { return arg("--operation") ?? "solicit-primary-release"; }
+
+function atInstant() { return argValue("--now") ?? new Date().toISOString(); }
+function operation() { return argValue("--operation") ?? "solicit-primary-release"; }
 function input() { return JSON.parse(readFileSync(0, "utf8")); }
 function literal(value) { return JSON.stringify(String(value)); }
 function witness(activity, outcome, at, details = {}) { return recordWitnessedBoundaryAct(activity, outcome, at, CONTRACT, details, WitnessJournal); }

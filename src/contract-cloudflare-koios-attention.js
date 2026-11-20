@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { argValue } from "@red-cup-engineering/parse-javascript-argv-service";
 
 import { randomUUID } from "node:crypto";
 import { lstatSync, readFileSync } from "node:fs";
@@ -28,9 +29,9 @@ const API = "https://api.cloudflare.com/client/v4";
 const EFFECTS = Object.freeze(["read-koios-aggregate-attention-namespace", "return-bounded-article-day-totals", "append-provider-local-witness-journal"]);
 const WitnessJournal = witnessJournalBindingFromArgv();
 
-function argument(name) { const index = process.argv.indexOf(name); return index === -1 ? undefined : process.argv[index + 1]; }
-function instant() { return argument("--now") ?? new Date().toISOString(); }
-function operation() { return argument("--operation") ?? "solicit-attention-service"; }
+
+function instant() { return argValue("--now") ?? new Date().toISOString(); }
+function operation() { return argValue("--operation") ?? "solicit-attention-service"; }
 function input() { return JSON.parse(readFileSync(0, "utf8")); }
 function response(type, source, object) { return { "@context": CONTEXT, id: `urn:uuid:${randomUUID()}`, type, actor: ACTOR, target: source?.actor ?? CUSTOMER, inReplyTo: source?.id, object }; }
 function emit(value, status = 0) { process.stdout.write(`${JSON.stringify(value)}\n`); process.exitCode = status; }
