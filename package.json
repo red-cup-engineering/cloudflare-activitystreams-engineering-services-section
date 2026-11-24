@@ -1,0 +1,33 @@
+{
+  "name": "@red-cup-engineering/cloudflare-activitystreams-engineering-services-section",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Cloudflare R2 and Worker operations with ActivityStreams adapters.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-cup-engineering/cloudflare-activitystreams-engineering-services-section.git"
+  },
+  "scripts": {
+    "check": "node --check src/contract-cloudflare-r2-object-custody.js && node --check src/contract-cloudflare-static-delivery.js && node --check src/contract-cloudflare-primary-static-release.js && node --check src/contract-cloudflare-koios-attention.js"
+  },
+  "dependencies": {
+    "@red-cup-engineering/cloudflare-r2-engineering-services-section": "^0.7.1",
+    "@red-cup-engineering/computer-inference-engine": "^0.2.13",
+    "@red-cup-engineering/cryptographic-computer-data-engineering-services-section": "^0.3.3",
+    "@red-cup-engineering/uri-engineering-services-section": "^0.1.5",
+    "wrangler": "^4.112.0",
+    "@red-cup-engineering/semiotic-eavt-engineering-services-section": "0.6.10",
+    "@red-cup-engineering/semantic-record-journal-service": "0.6.3",
+    "@red-cup-engineering/signcell": "^0.18.0 || 0.18.1-dev.0",
+    "@red-cup-engineering/parse-javascript-argv-service": "^0.3.0 || 0.3.1-dev.0"
+  },
+  "devDependencies": {
+    "@red-cup-engineering/semiotic-eavt-engineering-services-section": "0.6.10",
+    "@red-cup-engineering/computer-inference-engine": "^0.2.13"
+  },
+  "license": "MIT",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
+  }
+}
