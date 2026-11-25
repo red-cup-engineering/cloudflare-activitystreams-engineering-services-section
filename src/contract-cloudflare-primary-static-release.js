@@ -1,9 +1,9 @@
 #!/usr/bin/env node
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { argValue } from "@red-cup-engineering/parse-javascript-argv-service";
 import { isRecord } from "@red-cup-engineering/signcell/values";
 
 import { randomUUID } from "node:crypto";
-import { sha256Hex } from "@red-cup-engineering/cryptographic-computer-data-engineering-services-section/integrity";
 import { spawnSync } from "node:child_process";
 import {
   closeSync,
